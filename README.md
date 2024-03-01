@@ -1,6 +1,6 @@
 # vuecli_vue3.x_project
 
-vue3 相关内容
+vue3 相关内容。
 
 ## Project setup
 
