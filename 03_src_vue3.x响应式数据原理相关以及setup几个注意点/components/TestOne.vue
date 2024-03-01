@@ -3,7 +3,7 @@
  * @Description: Description
  * @Date: 2024-02-22 20:32:15
  * @LastEditors: Chengya
- * @LastEditTime: 2024-02-23 16:39:18
+ * @LastEditTime: 2024-03-01 17:32:33
 -->
 <template>
   <div>
@@ -28,17 +28,18 @@
 <script>
 export default {
   props: ['person', 'title'],
-  emits: ['test'], //自定义事件要使用 emits 来接收
+  emits: ['test'], //自定义事件要使用 emits 来接收 不配置目前看来没什么影响 自定义事件也能使用
   beforeCreate() {
     console.log('hello', this)
   },
   setup(props, context) {
     console.log('你好', this)
-    // console.log(props, 'props===setup')
-    // console.log(context, 'context===setup')
+    //console.log(props, 'props===setup')
+    console.log(context, 'context===setup')
     // console.log(context.attrs, 'attrs')
     function testEmit() {
       console.log('哈哈哈哈')
+      //this.$emit('test', 10000)
       context.emit('test', 10000)
     }
     return {

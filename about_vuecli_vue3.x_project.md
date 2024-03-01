@@ -89,7 +89,7 @@
    reactive() 对引用数据类型的包装后，返回了一个代理对象（Proxy 实例对象，简称为 proxy 对象）
    reactive() 定义的响应式数据是深层次的（对象数据的层级很深也可以监测的到）
    reactive() 实现响应式数据，本质上是内部基于 ES6 的 Proxy 来实现的，通过代理对象 实现对源对象内部数据的操作。
-   如何 使用 reactive 将引用数据类型数据包装响应书数据
+   如何 使用 reactive 将引用数据类型数据包装成为响应式数据
 
    1. 引入 import {reactive} from 'vue'
    2. 使用 reactive() 包裹 引用数据类型 reactive({name:'tom'}) / reactive([1,2,3])
@@ -162,8 +162,7 @@
 
    watch:使用时需要指定要监视的属性，和回调函数
    watchEffect:使用时不需要指明监视哪个属性，监视的回调中用到了哪个属性，就会监视哪个属性。
-   watchEffect 在某种程度上有点像 计算属性 computed,只不过 computed 更侧重于计算出来的值，所以要有返回值，而
-   watchEffect 侧重的是过程，无需有返回值。
+   watchEffect 在某种程度上有点像 计算属性 computed,只不过 computed 更侧重于计算出来的值，所以要有返回值，而 watchEffect 侧重的是过程，无需有返回值。
 
 # vue3.x 中的 生命周期函数 和 自定义 hook 函数 以及其他常用属性 05_src_vue3.x 生命周期和常用属性
 
@@ -209,7 +208,7 @@
    shallowReadonly：让一个响应式数据变为只读的（浅层只读，深层还可修改）。
    应用场景: 不希望数据被修改时。
 
-6. marRaw 和 toRaw
+6. markRaw 和 toRaw
    toRaw: 将一个由 reactive 定义的响应式数据 转换为普通数据
    使用场景 用于读取响应式对象对应的普通对象，对这个普通对象的所有操作，不会引起页面更新
 
