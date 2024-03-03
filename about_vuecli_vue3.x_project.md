@@ -94,6 +94,7 @@
    1. 引入 import {reactive} from 'vue'
    2. 使用 reactive() 包裹 引用数据类型 reactive({name:'tom'}) / reactive([1,2,3])
    3. 使用时直接使用即可，修改时可以直接修改 也不需要像 ref 包装后 通过.value 来修改。
+   4. 修改 reactive 整个对象时 不允许直接修改，要使用 Object.assign(targetObj,{}) 修改
 
 # vue3.x 数据响应式原理 03_src_vue3.x 响应式数据原理相关以及 setup 几个注意点
 
@@ -149,12 +150,15 @@
       第二个参数:监视业务代码，监视多个属性时 newValue/oldValue 为数组
       第三个参数 {} immediate:true/deep:true 放在第三个参数里面
 
-   使用 watch 来监视 reactive 创建的数据时 和 监视 ref 创建的数据有一些不同之处
+   3. 使用 watch 来监视 reactive 创建的数据时 和 监视 ref 创建的数据有一些不同之处
 
-   1. 监视 reactive 定义的数据时 无法获取到 oldValue,此时 oldValue 和 newValue 一样都是最新的数据，且深度监视 deep:true 是强制开启的，即使 人为设置 deep:false 也不会生效。
-   2. 监视 reactive 定义的数据的某个 非对象属性时,第一个参数 属性名要使用函数 ()=>person.propName，
-      要监视多个的话，使用数组 [()=>person.propName1,()=>person.propName2] 此时 可以获取到 oldValue
-   3. 监视 reactive 定义的数据的某个对象属性时，同样无法获取到 oldValue,且此时，需要开启 deep:true 才会生效。
+      1. 监视 reactive 定义的数据时 无法获取到 oldValue,此时 oldValue 和 newValue 一样都是最新的数据，且深度监视 deep:true 是强制开启的，即使 人为设置 deep:false 也不会生效。
+      2. 监视 reactive 定义的数据的某个 非对象属性时,第一个参数 属性名要使用函数 ()=>person.propName，
+         要监视多个的话，使用数组 [()=>person.propName1,()=>person.propName2] 此时 可以获取到 oldValue
+      3. 监视 reactive 定义的数据的某个对象属性时，同样无法获取到 oldValue,且此时，需要开启 deep:true 才会生效。
+      4. watch 监听 ref 定义的对象数据时，如果是监听的整个对象，只有整个对象变化（引用发生变化）时可才可以监听到（在不配置 deep:true 时），且可以获取到 newValue 和 oldValue。如果监听整个对象并且想要当对象某个属性发生变化时也能被监听到，可以 添加 配置 deep:true，但是此时获取到的 newValue 和 oldValue 是一样的，都是最新的值。
+
+   4. watch 调用有返回值，其返回值是一个函数，可以通过执行该函数来结束当前的监听。
 
 3. watchEffect 函数
 
@@ -249,6 +253,20 @@
     在 Vue2 中: 组件必须有一个根标签
     在 Vue3 中: 组件可以没有根标签, 内部会将多个标签包含在一个 Fragment 虚拟元素中
     好处: 减少标签层级, 减小内存占用
+
+12. 标签的 ref 属性
+    1. 在普通标签上 添加 ref 属性,获取到普通的 dom 节点
+       import {ref} from 'vue'
+       <h2 ref="hello">hello</h2> ,另外 需要在 setup 中 声明 let hello = ref()
+       获取节点时 hello.value
+    2. 用在组件上时
+       <children ref="children"></children>
+       let children = ref()
+       获取时 同样通过 children.value
+       但是 如果想要获取到组件上的一些数据或者属性 需要 借助 defineExpose 在组件中 配置 可以通过 ref 属性获取到哪些组件中的属性
+       在组件中:
+       import {defineExpose} from 'vue'
+       defineExpose({a,b}) 如此配置 代表 通过组件上的 ref 可以获取到组件的哪些属性
 
 # vue3.x 中的其他常用组件 当前 src 下内容
 
