@@ -67,7 +67,7 @@
       返回一个对象，那么返回的对象中的数据，方法等可以在模板中直接使用。
       也可以返回一个渲染函数，自定义要渲染的 dom 结构，替换掉 template 模板的内容（很少用）。
    3. 注意点:尽量不要与 Vue2.x 配置混用
-      Vue2.x 配置（data、methos、computed...）中可以访问到 setup 中的属性、方法。
+      Vue2.x 配置（data、methods、computed...）中可以访问到 setup 中的属性、方法。
       但在 setup 中不能访问到 Vue2.x 配置（data、methos、computed...）。
       如果有重名, setup 优先 vue2.x 中的同名配置，但是一般不建议在 vue3 中再去使用 vue2.x 的配置。
    4. setup 不能是一个 async 函数，因为返回值不再是 return 的对象, 而是 promise, 模板看不到 return 对象中的属性。（实质上，setup 可以返回一个 Promise 实例，可以是一个 async 函数 但需要 Suspense 和异步组件的配合）
