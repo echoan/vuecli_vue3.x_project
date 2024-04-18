@@ -17,8 +17,8 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import Children from './components/Children.vue'
-//import TestOne from './components/TestOne,.vue' // 静态引入
-const TestOne = defineAsyncComponent(() => import('./components/TestOne,.vue')) // 使用defineAsyncComponent 异步动态引入
+//import TestOne from './components/TestOne.vue' // 静态引入
+const TestOne = defineAsyncComponent(() => import('./components/TestOne.vue')) // 使用defineAsyncComponent 异步动态引入
 export default {
   components: {
     Children,
